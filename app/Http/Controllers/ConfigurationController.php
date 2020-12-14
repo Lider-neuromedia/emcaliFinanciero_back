@@ -125,8 +125,43 @@ class ConfigurationController extends Controller{
         return response()->json($response, $response['status']);
     }
 
-    public function downloadTemplate(){
-        $file = public_path('files/datos_pr.xlsx');
+
+    // CARGA MASIVA.
+    public function uploadFile(Request $request){
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            $name = $request['name'] . "." . $file->guessExtension();
+            $path = public_path('files');
+            $file->move($path, $name);
+            $response = [
+                'response' => 'success',
+                'status' => 200,
+                'message' => 'Carga completada.'
+            ];
+        }else{
+            $response = [
+                'response' => 'error',
+                'status' => 403,
+                'message' => 'Error en la carga.'
+            ];
+        }
+        
+        return response()->json($response);
+    }
+
+
+    // DESCARGA EL EXCEL
+    public function downloadTemplate($module){
+        if ($module === 'ejecucion_presupuestal') {
+            $file = public_path('files/datos_pr.xlsx');
+        }else if($module === 'pyg'){
+            $file = public_path('files/datos_pyg.xlsx');
+        }else if($module === 'cartera'){
+            $file = public_path('files/datos_ca.xlsx');
+        }else{
+            return response()->json(['response' => 'error', 'status' => 403, 'message' => 'Modulo invalido']);
+        }
+
         return response()->download($file);
     }
 }

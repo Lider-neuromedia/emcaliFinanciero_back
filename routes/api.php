@@ -33,9 +33,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('delete/{id}', 'ConfigurationController@destroyUser');
 
     // Carga
+    Route::post('uploadFile', 'ConfigurationController@uploadFile');
 });
 
-Route::get('download-template', 'ConfigurationController@downloadTemplate');
+Route::get('download-template/{module}', 'ConfigurationController@downloadTemplate');
 // Ruta de error de autenticación
 Route::get('error', function (){
     return response()->json([
