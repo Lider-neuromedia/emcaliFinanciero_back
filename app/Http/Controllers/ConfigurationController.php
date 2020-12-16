@@ -66,9 +66,21 @@ class ConfigurationController extends Controller{
         ]);
 
         $user = User::find($id);
-        (isset($request['password'])) && $request['password'] = Hash::make($request['password']);
-        
-        if($user->update($request->all())){
+
+        $user->nombres = $request['nombres'];
+        $user->apellidos = $request['apellidos'];
+        $user->cedula = $request['cedula'];
+        $user->celular = $request['celular'];
+        $user->email = $request['email'];
+        $user->rol = $request['rol'];
+        $user->usuario = $request['usuario'];
+
+        if($request['password'] != ''){
+            $request['password'] = Hash::make($request['password']);
+            $user->password = $request['password'];
+        }
+
+        if($user->save()){
             $response = [
                 'response' => 'success',
                 'status' => 200,
