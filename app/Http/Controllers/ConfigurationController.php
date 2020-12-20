@@ -170,6 +170,8 @@ class ConfigurationController extends Controller{
             $file = public_path('files/datos_pyg.xlsx');
         }else if($module === 'cartera'){
             $file = public_path('files/datos_ca.xlsx');
+        }else if($module === 'indicadores'){
+            $file = public_path('files/datos_indicadores.xlsx');
         }else{
             return response()->json(['response' => 'error', 'status' => 403, 'message' => 'Modulo invalido']);
         }
