@@ -172,6 +172,8 @@ class ConfigurationController extends Controller{
             $file = public_path('files/datos_ca.xlsx');
         }else if($module === 'indicadores'){
             $file = public_path('files/datos_indicadores.xlsx');
+        }else if($module === 'gestion'){
+                $file = public_path('files/datos_gestion.xlsx');
         }else{
             return response()->json(['response' => 'error', 'status' => 403, 'message' => 'Modulo invalido']);
         }
